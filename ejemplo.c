@@ -43,8 +43,9 @@ void guardar_vehiculo(hash_t *garage, const char *patente,
 {
 	printf("Guardando vehiculo patente %s (%s): ", patente, descripcion);
 
-	void* anterior=NULL;
-	hash_t* retorno = hash_insertar(garage, patente, duplicar_string(descripcion), &anterior);
+	void *anterior = NULL;
+	hash_t *retorno = hash_insertar(
+		garage, patente, duplicar_string(descripcion), &anterior);
 
 	printf("%s\n", retorno != NULL ? "OK" : "ERROR");
 
