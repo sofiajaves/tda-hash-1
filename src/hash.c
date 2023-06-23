@@ -97,12 +97,12 @@ char *strdup(const char *clave)
  *	Se devuelve un struct de par clave/valor con su respectiva reserva de memoria y campos actualizados
  *	Devuelve NULL en caso de error
  */
-par_t *crear_par(const char *clave, void *elemento)
+nodo_t *crear_par(const char *clave, void *elemento)
 {
 	if (!clave)
 		return NULL;
 
-	par_t *nuevo_par = malloc(sizeof(par_t));
+	nodo_t *nuevo_par = malloc(sizeof(nodo_t));
 	if (!nuevo_par)
 		return NULL;
 
