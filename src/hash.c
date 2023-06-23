@@ -115,7 +115,7 @@ nodo_t *crear_par(const char *clave, void *elemento)
 	return nuevo_par;
 }
 
-hash_t *rehash(hash_t *hash)
+/*hash_t *rehash(hash_t *hash)
 {
 	size_t nueva_capacidad = hash->capacidad * 2;
 	nodo_t **nuevo_vector = calloc(nueva_capacidad, sizeof(nodo_t *));
@@ -140,7 +140,36 @@ hash_t *rehash(hash_t *hash)
 	hash->vector = nuevo_vector;
 	hash->capacidad = nueva_capacidad;
 	return hash;
+}*/
+
+
+
+hash_t *hash_rehash(hash_t *h)
+{
+	size_t nueva_capacidad = ((h->capacidad) * 2) + 1;
+	nodo_t **vector_aux = h->pares;
+	size_t capacidad_aux = h->capacidad;
+
+	nodo_t **vector_nuevo = calloc(nueva_capacidad, sizeof(par_t *));
+	if (!vector_nuevo)
+		return NULL;
+	h->pares = vector_nuevo;
+	h->capacidad = nueva_capacidad;
+	h->cantidad = 0;
+
+	for (size_t i = 0; i < capacidad_aux; i++) {
+		nodo_t *actual = vector_aux[i];
+		if (actual) {
+			h = ingresar_desde_ultima_pos(h, actual);
+		}
+	}
+
+	free(vector_aux);
+
+	return h;
 }
+
+
 
 hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		      void **anterior)
@@ -152,7 +181,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 
 	float factor_carga = (float)(hash->cantidad) / (float)(hash->capacidad);
 	if (factor_carga > FACTOR_CARGA_MAXIMO)
-		hash = rehash(hash);
+		hash = hash_rehash(hash);
 
 	if (!hash)
 		return NULL;
