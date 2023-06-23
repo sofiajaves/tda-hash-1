@@ -181,7 +181,7 @@ hash_t *hash_insertar(hash_t *hash, const char *clave, void *elemento,
 		actual = actual->siguiente;
 	}
 
-	nodo_t *nodo = nodo_crear(clave, elemento);
+	nodo_t *nodo = crear_par(clave, elemento);
 	if (!nodo)
 		return NULL;
 
